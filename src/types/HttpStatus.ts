@@ -1,4 +1,4 @@
-enum HttpStatus {
+export enum HttpStatus {
   CONTINUE=100,
   SWITCHING_PROTOCOL=101,
   OK=202,
@@ -18,5 +18,3 @@ enum HttpStatus {
   BAD_GATEWAY=502,
   SERVICE_UNAVAILABLE=503,
 }
-
-export default HttpStatus;

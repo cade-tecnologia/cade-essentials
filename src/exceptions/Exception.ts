@@ -1,11 +1,11 @@
-import HttpStatus from '../types/HttpStatus';
+import { HttpStatus } from '..';
 
 export interface ExceptionOptions {
     message: string;
     status: HttpStatus;
 }
 
-export default class Exception extends Error implements ExceptionOptions{
+export class Exception extends Error implements ExceptionOptions{
     public constructor(
         public readonly message: string,
         public readonly status: HttpStatus,

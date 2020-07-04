@@ -6,7 +6,7 @@
     "/build/**/*"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "rm -rf ./build && tsc",
     "prepare": "npm run build"
   },
   "keywords": [
