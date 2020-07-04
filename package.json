@@ -1,6 +1,6 @@
 {
   "name": "@cade-tecnologia/essentials",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "types": "./build/**/*.d.ts",
   "files": [
     "/build/**/*"
@@ -16,7 +16,7 @@
   ],
   "author": "",
   "license": "ISC",
-    "publishConfig": {
+  "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
   "devDependencies": {
