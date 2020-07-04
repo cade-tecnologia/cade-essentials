@@ -1,6 +1,6 @@
 {
   "name": "@cade-tecnologia/essentials",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "types": "./build/**/*.d.ts",
   "files": [
     "/build/**/*"
