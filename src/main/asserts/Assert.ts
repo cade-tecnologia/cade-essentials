@@ -1,11 +1,9 @@
-import { isEqual as isEqualLodash, isEmpty as isEmptyLodash } from 'lodash';
-
 import AssertException from '../exceptions/AssertException';
 import Verify from '../verifies/Verify';
 
 export default abstract class Assert {
     public static nullOrUndefined(value: any, errorMsg: string = 'Is Null or Undefined assertion failed'): void {
-        if (value !== null && value !== undefined) {
+        if (Verify.isNotNullOrUndefined(value)) {
             throw new AssertException(errorMsg);
         }
     }
@@ -17,13 +15,13 @@ export default abstract class Assert {
     }
 
     public static equals<T>(a: T, b: T, errorMsg: string = 'Equal assertion failed'): void {
-        if (!isEqualLodash(a, b)) {
+        if (Verify.isNotEquals(a, b)) {
             throw new AssertException(errorMsg)
         }
     }
 
     public static notEquals(a: any, b: any, errorMsg: string = 'Not Equal assertion failed'): void {
-        if (isEqualLodash(a, b)) {
+        if (Verify.isEquals(a, b)) {
             throw new AssertException(errorMsg)
         }
     }
@@ -31,7 +29,7 @@ export default abstract class Assert {
     public static notBlank(value: string | null | undefined, errorMsg: string = 'Not Blank assertion failed'): void {
         Assert.notNullOrUndefined(value, errorMsg);
 
-        if (!value!.toString().replace(/\s/g, '').length) {
+        if (Verify.isBlank(value)) {
             throw new AssertException(errorMsg);
         }
     }
@@ -39,7 +37,7 @@ export default abstract class Assert {
     public static blank(value: string | null | undefined, errorMsg: string = 'Blank assertion failed'): void {
         Assert.notNullOrUndefined(value, errorMsg);
 
-        if (value!.toString().replace(/\s/g, '').length > 0) {
+        if (Verify.isNotBlank(value)) {
             throw new AssertException(errorMsg);
         }
     }
@@ -47,11 +45,7 @@ export default abstract class Assert {
     public static notEmpty(value: Array<any> | Object | undefined | null, errorMsg: string = 'Not Empty assertion failed'): void {
         Assert.notNullOrUndefined(value, errorMsg);
 
-        const valueUpdated = typeof value === 'string'
-            ? value!.toString().replace(/\s/g, '')
-            : value;
-
-        if(isEmptyLodash(valueUpdated)) {
+        if(Verify.isEmpty(value)) {
             throw new AssertException(errorMsg);
         }
     }
@@ -59,11 +53,7 @@ export default abstract class Assert {
     public static empty(value: Array<any> | Object | undefined | null, errorMsg: string = 'Empty assertion failed'): void {
         Assert.notNullOrUndefined(value, errorMsg);
 
-        const valueUpdated = typeof value === 'string'
-            ? value!.toString().replace(/\s/g, '')
-            : value;
-
-        if(!isEmptyLodash(valueUpdated)) {
+        if(Verify.isNotEmpty(value)) {
             throw new AssertException(errorMsg);
         }
     }
