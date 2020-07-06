@@ -2,7 +2,7 @@ import { AssertException } from '../exceptions';
 import { isEqual as isEqualLodash, isEmpty as isEmptyLodash } from 'lodash';
 import { Verify } from '../verifies';
 
-export abstract class Assert {
+export default abstract class Assert {
     public static nullOrUndefined(value: any, errorMsg: string = 'Is Null or Undefined assertion failed'): void {
         if (value !== null && value !== undefined) {
             throw new AssertException(errorMsg);

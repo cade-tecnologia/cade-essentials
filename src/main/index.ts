@@ -1,4 +1,4 @@
-export * from './exceptions';
+export * from './asserts';
 export * from './exceptions';
 export * from './optinals';
 export * from './sanitizers';

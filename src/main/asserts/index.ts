@@ -1,1 +1,1 @@
-export * from './Assert';
+export { default as Assert } from './Assert';

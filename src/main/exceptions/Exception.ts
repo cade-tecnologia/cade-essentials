@@ -5,7 +5,7 @@ export interface ExceptionOptions {
     status: HttpStatus;
 }
 
-export class Exception implements ExceptionOptions{
+export default class Exception implements ExceptionOptions{
     public constructor(
         public readonly message: string,
         public readonly status: HttpStatus,

@@ -1,7 +1,7 @@
-import { HttpStatus } from '..';
-import { Exception } from './Exception';
+import { Exception } from './index';
+import { HttpStatus } from '../index';
 
-export class AssertException extends Exception {
+export default class AssertException extends Exception {
     constructor(
         public readonly message: string,
         public readonly status: HttpStatus = HttpStatus.BAD_REQUEST,
