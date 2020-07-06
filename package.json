@@ -1,13 +1,13 @@
 {
   "name": "@cade-tecnologia/essentials",
   "version": "1.0.5",
-  "types": "./build/**/*.d.ts",
+  "types": "./dist/**/*.d.ts",
   "files": [
-    "/build/**/*"
+    "/dist/**/*"
   ],
-  "main": "build/index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "build": "rm -rf ./build && tsc",
+    "build": "rm -rf ./dist && tsc",
     "prepare": "npm run build",
     "test": "jest --collect-coverage"
   },
