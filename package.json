@@ -1,6 +1,6 @@
 {
   "name": "@cade-tecnologia/essentials",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "types": "./build/**/*.d.ts",
   "files": [
     "/build/**/*"
@@ -16,7 +16,6 @@
     "@cade",
     "cade onibus"
   ],
-
   "author": "",
   "license": "ISC",
   "publishConfig": {
