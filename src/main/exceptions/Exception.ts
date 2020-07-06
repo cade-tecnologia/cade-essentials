@@ -1,18 +1,16 @@
-import { HttpStatus } from '..';
+import { HttpStatus } from '../index';
 
 export interface ExceptionOptions {
     message: string;
     status: HttpStatus;
 }
 
-export class Exception extends Error implements ExceptionOptions{
+export class Exception implements ExceptionOptions{
     public constructor(
         public readonly message: string,
         public readonly status: HttpStatus,
         public readonly error?: any,
     ) {
-        super(message);
-
         if (error) {
             console.warn('Thrown error: ', error)
         }
