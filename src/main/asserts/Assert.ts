@@ -1,6 +1,7 @@
-import { AssertException } from '../exceptions';
 import { isEqual as isEqualLodash, isEmpty as isEmptyLodash } from 'lodash';
-import { Verify } from '../verifies';
+
+import AssertException from '../exceptions/AssertException';
+import Verify from '../verifies/Verify';
 
 export default abstract class Assert {
     public static nullOrUndefined(value: any, errorMsg: string = 'Is Null or Undefined assertion failed'): void {

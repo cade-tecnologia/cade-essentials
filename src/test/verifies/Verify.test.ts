@@ -1,4 +1,4 @@
-import { Verify } from '../../main/verifies';
+import { Verify } from '../../main';
 
 const spyIsNullOrUndefined = jest.spyOn(Verify, 'isNullOrUndefined');
 

@@ -9,7 +9,7 @@
   "scripts": {
     "build": "rm -rf ./dist && tsc",
     "prepare": "npm run build",
-    "test": "jest --collect-coverage"
+    "test": "rm -rf /coverage && jest"
   },
   "keywords": [
     "cade",

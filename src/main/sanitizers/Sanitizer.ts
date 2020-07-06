@@ -1,3 +1,3 @@
-export class Sanitizer {
+export default class Sanitizer {
 
 }

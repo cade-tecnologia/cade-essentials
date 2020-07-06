@@ -1,1 +1,1 @@
-export * from './Opitanal';
+export { default as Opitanal } from './Opitanal';

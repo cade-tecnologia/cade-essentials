@@ -1,4 +1,4 @@
-import { HttpStatus } from '../index';
+import HttpStatus from '../types/HttpStatus';
 
 export interface ExceptionOptions {
     message: string;

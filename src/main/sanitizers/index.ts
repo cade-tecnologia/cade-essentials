@@ -1,1 +1,1 @@
-export * from './Sanitizer';
+export { default as Sanitizer } from './Sanitizer';

@@ -1,6 +1,6 @@
 import { isEqual as isEqualLodash, isEmpty as isEmptyLodash } from 'lodash';
 
-export abstract class Verify {
+export default abstract class Verify {
     public static isNullOrUndefined(value: any): boolean {
         return value === null || value === undefined
     }
