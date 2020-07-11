@@ -8,9 +8,9 @@
   ],
   "scripts": {
     "delete-cache": "rm -rf ./dist && rm -rf ./coverage",
-    "build": "rm -rf ./dist && tsc",
+    "build": "npm run delete-cache && tsc",
     "prepare": "npm run build",
-    "test": "rm -rf /coverage && jest"
+    "test": "npm run delete-cache && jest"
   },
   "husky": {
     "hooks": {
@@ -34,10 +34,10 @@
     "jest": "^26.1.0",
     "ts-jest": "^26.1.1",
     "ts-node-dev": "^1.0.0-pre.50",
+    "husky": "^4.2.5",
     "typescript": "^3.9.6"
   },
   "dependencies": {
-    "husky": "^4.2.5",
     "lodash": "^4.17.15"
   }
 }
