@@ -7,9 +7,15 @@
     "dist/**/*"
   ],
   "scripts": {
+    "delete-cache": "rm -rf ./dist && rm -rf ./coverage",
     "build": "rm -rf ./dist && tsc",
     "prepare": "npm run build",
     "test": "rm -rf /coverage && jest"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run delete-cache"
+    }
   },
   "keywords": [
     "cade",
@@ -31,6 +37,7 @@
     "typescript": "^3.9.6"
   },
   "dependencies": {
+    "husky": "^4.2.5",
     "lodash": "^4.17.15"
   }
 }
