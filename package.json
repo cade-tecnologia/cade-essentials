@@ -1,6 +1,6 @@
 {
   "name": "@cade-tecnologia/essentials",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
   "files": [
@@ -31,10 +31,10 @@
     "@types/jest": "^26.0.3",
     "@types/lodash": "^4.14.157",
     "@types/node": "^14.0.14",
+    "husky": "^4.2.5",
     "jest": "^26.1.0",
     "ts-jest": "^26.1.1",
     "ts-node-dev": "^1.0.0-pre.50",
-    "husky": "^4.2.5",
     "typescript": "^3.9.6"
   },
   "dependencies": {
