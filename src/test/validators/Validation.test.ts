@@ -1,4 +1,4 @@
-import { rangeInclusive, Validation } from '../../main';
+import { BrazilDDD, CountyDailCodes, rangeInclusive, Validation } from '../../main';
 
 describe('Validation', () => {
   describe('CPF', () => {
@@ -67,5 +67,63 @@ describe('Validation', () => {
           .toBe(false);
       });
     }
+  });
+
+  describe('Cell Phone Number', () => {
+    test('Should only return true', () => {
+      // expect(Validation.cellPhoneNumber(5511986823682)
+      //   .withBrazilDDI()
+      //   .and()
+      //   .withDDD()
+      //   .and()
+      //   .startingWithNine()
+      //   .validade())
+      //   .toBe(true);
+      // expect(Validation.cellPhoneNumber('(61) 9 8682-3682')
+      //   .startingWithNine()
+      //   .and()
+      //   .withDDD()
+      //   .validade()
+      // ).toBe(true);
+      // expect(Validation.cellPhoneNumber('+501 (61) 9 8682-3666')
+      //   .withDDI()
+      //   .and()
+      //   .startingWithNine()
+      //   .and()
+      //   .withDDD()
+      //   .validade()
+      // ).toBe(true);
+    });
+
+    function testAllCountyDialCodes(number: string): void {
+      test(`Number: ${number} should be valid`, () => {
+        expect(Validation.cellPhoneNumber(number)
+          .withDDI()
+          .and()
+          .startingWithNine()
+          .and()
+          .withDDD()
+          .validade()
+        ).toBe(true);
+      })
+    }
+
+    function testAllBrazilDDDs(number: string): void {
+      test(`Number: ${number} should be valid`, () => {
+        expect(Validation.cellPhoneNumber(number)
+          .withDDD()
+          .validade()
+        ).toBe(true)
+      })
+    }
+
+    CountyDailCodes
+      .map((cdc) => cdc.dialCode)
+      .map((dc) => dc.replace('+', ''))
+      .map((dc) => `+${dc} (61) 9 8682-3666`)
+      .forEach(testAllCountyDialCodes);
+    BrazilDDD
+      .map((ddd) => `(${ddd}) 88823333`)
+      .forEach(testAllBrazilDDDs);
   });
 })

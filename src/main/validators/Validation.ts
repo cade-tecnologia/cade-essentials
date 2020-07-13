@@ -1,9 +1,12 @@
 import Verify from '../verifies/Verify';
 import Sanitizer from '../sanitizers/Sanitizer';
 import { rangeInclusive } from '../helpers';
+import PhoneNumber from './phone-number/PhoneNumber';
+
+type defaultParameterType = string | number | null | undefined;
 
 export default abstract class Validation {
-  public static isCPF(cpf: string | number | null | undefined): boolean {
+  public static isCPF(cpf: defaultParameterType): boolean {
     if (Verify.isNullOrUndefined(cpf)) return false;
     const cpfSanitized = typeof cpf === 'string'
       ? Sanitizer.cpf(cpf)
@@ -48,5 +51,9 @@ export default abstract class Validation {
     }
 
     return firstValidation() && secondValidation();
+  }
+
+  public static cellPhoneNumber(number: defaultParameterType): PhoneNumber {
+    return PhoneNumber.from(number);
   }
 }
