@@ -459,6 +459,8 @@ describe('Assert', () => {
 
   describe('Ends with', () => {
     test('Ends with should not fail', () => {
+      expect(Assert.endEndsWith('FormStoreHelperMixin', 'Mixin'))
+        .toBeUndefined();
       expect(Assert.endEndsWith('testeEAE', 'EAE'))
         .toBeUndefined();
       expect(Assert.endEndsWith('KKKKKKKK', 'K'))
@@ -476,6 +478,8 @@ describe('Assert', () => {
     });
 
     test('Ends with should fail', () => {
+      expect(() => Assert.endEndsWith('FormStoreHelper', 'Mixin'))
+        .toThrow(AssertException);
       expect(() => Assert.endEndsWith('eae', 'oi'))
         .toThrow(AssertException);
       expect(() => Assert.endEndsWith('  lol   ', '   dota'))
