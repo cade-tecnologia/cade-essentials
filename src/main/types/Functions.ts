@@ -3,6 +3,7 @@ export type BiConsumer<ParamA, ParamB> = (t: ParamA, u: ParamB) => void;
 
 export type Function<Param, Return> = (t: Param) => Return;
 export type BiFunction<ParamA, ParamB, Return> = (t: ParamA, u: ParamB) => Return;
+export type TriFunction<ParamA, ParamB, ParamC, Return> = (a: ParamA, b: ParamB, c: ParamC) => Return;
 
 export type UnaryOperator<ParamReturn> = Function<ParamReturn, ParamReturn>;
 

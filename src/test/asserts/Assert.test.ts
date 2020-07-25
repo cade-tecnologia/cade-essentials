@@ -72,7 +72,7 @@ describe('Assert', () => {
     });
   });
 
-  describe('Not Equal', () => {
+  describe('Not equal', () => {
     test('asserts Not Equals should not fail', () => {
       expect(Assert.notEquals(undefined, null))
         .toBeUndefined();
@@ -209,7 +209,7 @@ describe('Assert', () => {
     })
   });
 
-  describe('Not Blank', () => {
+  describe('Not blank', () => {
     const spyNotNullOrUndefined = jest.spyOn(Assert, 'notNullOrUndefined');
 
     test('Not Blank should not fail', () => {
@@ -271,7 +271,7 @@ describe('Assert', () => {
     });
   });
 
-  describe('Not Empty', function () {
+  describe('Not empty', function () {
     test('Not Empty should not fail', () => {
       expect(Assert.notEmpty(['a']))
         .toBeUndefined();
@@ -455,5 +455,79 @@ describe('Assert', () => {
       expect(() => Assert.notNumber('123'))
         .toThrow(AssertException);
     })
+  });
+
+  describe('Ends with', () => {
+    test('Ends with should not fail', () => {
+      expect(Assert.endEndsWith('testeEAE', 'EAE'))
+        .toBeUndefined();
+      expect(Assert.endEndsWith('KKKKKKKK', 'K'))
+        .toBeUndefined();
+      expect(Assert.endEndsWith('   Sera q ta facionando      ', 'do'))
+        .toBeUndefined();
+      expect(Assert.endEndsWith('  ultimo    tes    te   ', '    e   '))
+        .toBeUndefined();
+      expect(Assert.endEndsWith('  ultimo de verda  de    ', '    de'))
+        .toBeUndefined();
+      expect(Assert.endEndsWith('Agora eh pra valer o   ultim   o', 'm   o       '))
+        .toBeUndefined();
+      expect(spyNotNullOrUndefined)
+        .toBeCalled();
+    });
+
+    test('Ends with should fail', () => {
+      expect(() => Assert.endEndsWith('eae', 'oi'))
+        .toThrow(AssertException);
+      expect(() => Assert.endEndsWith('  lol   ', '   dota'))
+        .toThrow(AssertException);
+      expect(() => Assert.endEndsWith('  Dota', '   lol    '))
+        .toThrow(AssertException);
+      expect(() => Assert.endEndsWith('eae', 'E'))
+        .toThrow(AssertException);
+      expect(() => Assert.endEndsWith(null, '   dota'))
+        .toThrow(AssertException);
+      expect(() => Assert.endEndsWith(undefined, '   dota'))
+        .toThrow(AssertException);
+      expect(() => Assert.endEndsWith('  lol   ', '   dota', errMsg))
+        .toThrow(errMsg.errorMessage);
+      expect(spyNotNullOrUndefined)
+        .toBeCalled();
+    });
+  });
+
+  describe('Doesnt ends with', () => {
+    test('Doesnt ends with should not fail', () => {
+      expect(Assert.doesntEndsWith('eae', 'Kkkk'))
+        .toBeUndefined();
+      expect(Assert.doesntEndsWith('  lol   ', '   dota'))
+        .toBeUndefined();
+      expect(Assert.doesntEndsWith('  Dota', '   lol    '))
+        .toBeUndefined();
+      expect(Assert.doesntEndsWith('eae', 'E'))
+        .toBeUndefined();
+      expect(Assert.doesntEndsWith('  lol   ', '   dota'))
+        .toBeUndefined();
+      expect(spyNotNullOrUndefined)
+        .toBeCalled();
+    });
+
+    test('Doesnt ends with should fail', () => {
+      expect(() => Assert.doesntEndsWith('testeEAE', 'EAE'))
+        .toThrow(AssertException);
+      expect(() => Assert.doesntEndsWith('KKKKKKKK', 'K'))
+        .toThrow(AssertException);
+      expect(() => Assert.doesntEndsWith('   Sera q ta facionando      ', 'do'))
+        .toThrow(AssertException);
+      expect(() => Assert.doesntEndsWith('  ultimo    tes    te   ', '    e   '))
+        .toThrow(AssertException);
+      expect(() => Assert.doesntEndsWith('  ultimo de verda  de    ', '    de'))
+        .toThrow(AssertException);
+      expect(() => Assert.doesntEndsWith('Agora eh pra valer o   ultim   o', 'm   o       '))
+        .toThrow(AssertException);
+      expect(() => Assert.doesntEndsWith('ffff', 'f', errMsg))
+        .toThrow(errMsg.errorMessage)
+      expect(spyNotNullOrUndefined)
+        .toBeCalled();
+    });
   });
 });

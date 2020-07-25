@@ -112,6 +112,26 @@ export default abstract class Assert {
     }
   }
 
+  public static endEndsWith(value: string | null | undefined, end: string, options?: AssertOptions): void {
+    const defaultOptions = this.buildDefaultOptions('Ends with assertion failed', options);
+
+    Assert.notNullOrUndefined(value, defaultOptions);
+
+    if (!value!.trim().endsWith(end.trim())) {
+      throw new AssertException(defaultOptions);
+    }
+  }
+
+  public static doesntEndsWith(value: string | null | undefined, end: string, options?: AssertOptions): void {
+    const defaultOptions = this.buildDefaultOptions('Doesnt ends with assertion failed', options);
+
+    Assert.notNullOrUndefined(value, defaultOptions);
+
+    if (value!.trim().endsWith(end.trim())) {
+      throw new AssertException(defaultOptions);
+    }
+  }
+
   private static buildDefaultOptions(defaultMsg: string, options: AssertOptions | undefined | null): AssertOptions {
     return {
       errorMessage: options?.errorMessage ?? defaultMsg,
