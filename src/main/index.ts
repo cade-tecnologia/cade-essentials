@@ -7,3 +7,4 @@ export * from './types';
 export * from './utilities'
 export * from './validators';
 export * from './verifies';
+export * from './http';
