@@ -13,10 +13,10 @@ export default abstract class AbstractResource {
 
   private readonly BASE_URL: string;
 
-  protected constructor(resource: string, apiURL: string, httpClientConfig?: HttpClientConstructorProps) {
+  protected constructor(apiURL: string, resourceEndpoint: string, httpClientConfig?: HttpClientConstructorProps) {
 
     this.HTTP = HttpClient.getInstance(httpClientConfig);
-    this.BASE_URL = `${ apiURL }/${ resource }`;
+    this.BASE_URL = `${ apiURL }/${ resourceEndpoint }`;
   }
 
   protected get<T>(url = ''): Observable<T> {
