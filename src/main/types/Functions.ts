@@ -16,7 +16,7 @@ export type Runnable = () => void;
 
 // Dummy functions to use as fallBack
 // eslint-disable-next-line no-unused-vars
-export const ConsumerImpl: Consumer<any> = (_) => {
-};
+export function ConsumerImpl<T = any>(_: T): void {}
+
 export const RunnableImpl: Runnable = () => {
 };
