@@ -9,13 +9,13 @@ import HttpClientConstructorProps from '../types/HttpClientConstructorProps';
 import Verify from '../verifies/Verify';
 
 export default abstract class AbstractResource {
-  protected readonly HTTP: HttpClient;
+  protected readonly HTTP_CLIENT: HttpClient;
 
   private readonly BASE_URL: string;
 
   protected constructor(apiURL: string, resourceEndpoint: string, httpClientConfig?: HttpClientConstructorProps) {
 
-    this.HTTP = HttpClient.getInstance(httpClientConfig);
+    this.HTTP_CLIENT = HttpClient.getInstance(httpClientConfig);
     this.BASE_URL = `${ apiURL }/${ resourceEndpoint }`;
   }
 
@@ -23,7 +23,7 @@ export default abstract class AbstractResource {
     const formattedUrl = `${ this.BASE_URL }${url}`;
 
     return this.getResponseBody<T>(
-      this.HTTP.get(formattedUrl)
+      this.HTTP_CLIENT.get(formattedUrl)
     );
   }
 
@@ -31,7 +31,7 @@ export default abstract class AbstractResource {
     const formattedUrl = `${ this.BASE_URL }${url}`;
 
     return this.getResponseBody<T>(
-      this.HTTP.post<T>(formattedUrl, body)
+      this.HTTP_CLIENT.post<T>(formattedUrl, body)
     );
   }
 
