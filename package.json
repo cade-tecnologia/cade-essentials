@@ -1,6 +1,6 @@
 {
   "name": "@cade-tecnologia/essentials",
-  "version": "1.0.23",
+  "version": "1.0.24",
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
   "files": [
