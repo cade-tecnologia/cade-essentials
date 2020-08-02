@@ -45,7 +45,7 @@ export default abstract class AbstractResource {
     return `${url}?${query}`;
   }
 
-  private getResponseBody<T>(observable: AxiosObservable<T>): Observable<T> {
+  protected getResponseBody<T>(observable: AxiosObservable<T>): Observable<T> {
     return observable.pipe(
       map((value) => value.data)
     );
