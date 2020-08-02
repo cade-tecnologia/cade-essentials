@@ -2,7 +2,7 @@ import Verify from '../../verifies/Verify';
 import Sanitizer from '../../sanitizers/Sanitizer';
 import { rangeInclusive } from '../../helpers';
 import { defaultParameterType } from '../Validation';
-import { TriFunction } from '../../types';
+import { TriFunc } from '../../types';
 
 function calculateRemainder(result: number): number {
   const leftOver = result * 10 % 11;
@@ -16,7 +16,7 @@ function validateRemainder(cpfSanitized: string, reducerResult: number, charInde
   return remainder.toString() === cpfSanitized!.toString().charAt(charIndex)
 }
 
-function reducerEncapsulated(cpfSanitized: string): TriFunction<number, number, number, number> {
+function reducerEncapsulated(cpfSanitized: string): TriFunc<number, number, number, number> {
   function reducer(previousValue: number, currentValue: number, index: number): number {
     const cpfDig = Number(cpfSanitized.toString().charAt(index));
     return (cpfDig * currentValue) + previousValue;
