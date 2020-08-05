@@ -1,4 +1,4 @@
-import { isEmpty as isEmptyLodash, isEqual as isEqualLodash } from 'lodash';
+import { isEmpty as _isEmpty, isEqual as _isEqual } from 'lodash';
 
 export default abstract class Verify {
   public static isNullOrUndefined(value: any): boolean {
@@ -9,12 +9,18 @@ export default abstract class Verify {
     return value !== null && value !== undefined;
   }
 
+  /**
+   * Uses {@link _isEqual} from lodash for comparison
+   */
   public static isEquals<T>(a: T, b: T): boolean {
-    return isEqualLodash(a, b);
+    return _isEqual(a, b);
   }
 
+  /**
+   * Uses {@link _isEqual} from lodash for comparison
+   */
   public static isNotEquals(a: any, b: any): boolean {
-    return !isEqualLodash(a, b);
+    return !_isEqual(a, b);
   }
 
   public static isBlank(value: string | undefined | null): boolean {
@@ -29,6 +35,9 @@ export default abstract class Verify {
     return value!.toString().replace(/\s/g, '').length > 0;
   }
 
+  /**
+   * Uses {@link _isEmpty} from lodash to check it's empty
+   */
   public static isEmpty(value: Array<any> | Object | undefined | null): boolean {
     if (this.isNullOrUndefined(value)) return true;
 
@@ -36,9 +45,12 @@ export default abstract class Verify {
       ? value!.toString().replace(/\s/g, '')
       : value;
 
-    return isEmptyLodash(valueUpdated);
+    return _isEmpty(valueUpdated);
   }
 
+  /**
+   * Uses {@link _isEmpty} from lodash to check it's empty
+   */
   public static isNotEmpty(value: Array<any> | Object | undefined | null): boolean {
     if (this.isNullOrUndefined(value)) return false;
 
@@ -46,7 +58,7 @@ export default abstract class Verify {
       ? value!.toString().replace(/\s/g, '')
       : value;
 
-    return !isEmptyLodash(valueUpdated);
+    return !_isEmpty(valueUpdated);
   }
 
   public static isTrue(value: boolean | undefined | null): boolean {
