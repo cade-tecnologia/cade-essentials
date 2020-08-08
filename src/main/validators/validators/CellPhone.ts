@@ -1,6 +1,6 @@
 import Sanitizer from '../../sanitizers/Sanitizer';
 import Verify from '../../verifies/Verify';
-import { reverse } from '../../helpers';
+import { pushIf, reverse } from '../../helpers';
 import Exception from '../../exceptions/Exception';
 import HttpStatus from '../../types/HttpStatus';
 import CountyDailCode from '../../utilities/CountyDailCodes';
@@ -15,7 +15,8 @@ function getOptions(options?: CellPhoneNumberOptions): CellPhoneNumberOptions {
   return {
     withDDI,
     withDDD,
-    startingWithNine
+    startingWithNine,
+    useCustomMessage: options?.useCustomMessage,
   }
 }
 
@@ -133,11 +134,12 @@ function validateNine(numberSanitizes: string, options?: CellPhoneNumberOptions)
   return containsNine;
 }
 
-function validate(numberSanitizes: string, options?: CellPhoneNumberOptions): boolean {
+function validate(numberSanitizes: string, options?: CellPhoneNumberOptions): boolean | string[] {
   const {
     withDDI,
     withDDD,
     startingWithNine,
+    useCustomMessage,
   } = getOptions(options);
 
   const isDDIValid = validateDDI(numberSanitizes);
@@ -145,51 +147,140 @@ function validate(numberSanitizes: string, options?: CellPhoneNumberOptions): bo
   const isNinthValid = validateNine(numberSanitizes, options);
 
   if (withDDI && withDDD && startingWithNine) {
+    if (useCustomMessage) {
+      const msg: string[] = [];
+      const {
+        whenDDDIsInvalid,
+        whenDDIIsInvalid,
+        whenStartingWithNineIsInvalid,
+      } = useCustomMessage;
+
+      pushIf<string>(msg, !isDDIValid, whenDDIIsInvalid);
+      pushIf<string>(msg, !isDDDValid, whenDDDIsInvalid);
+      pushIf<string>(msg, !isNinthValid, whenStartingWithNineIsInvalid);
+      return pushIf<string>(msg, !isDDIValid, whenDDIIsInvalid);
+    }
     return isDDIValid && isDDDValid && isNinthValid;
   }
 
   if (withDDI && !withDDD && !startingWithNine) {
+    if (useCustomMessage) {
+      const msg: string[] = [];
+      const {
+        whenDDIIsInvalid,
+      } = useCustomMessage;
+
+      return pushIf<string>(msg, !isDDIValid, whenDDIIsInvalid);
+    }
     return isDDIValid;
   }
 
   if (withDDI && withDDD && !startingWithNine) {
+    if (useCustomMessage) {
+      const msg: string[] = [];
+      const {
+        whenDDIIsInvalid,
+        whenDDDIsInvalid,
+      } = useCustomMessage;
+
+      pushIf<string>(msg, !isDDIValid, whenDDIIsInvalid);
+      return pushIf<string>(msg, !isDDDValid, whenDDDIsInvalid);
+    }
+
     return isDDIValid && isDDDValid;
   }
 
   if (withDDI && !withDDD && startingWithNine) {
+    if (useCustomMessage) {
+      const msg: string[] = [];
+      const {
+        whenDDIIsInvalid,
+        whenStartingWithNineIsInvalid,
+      } = useCustomMessage;
+
+      pushIf<string>(msg, !isDDIValid, whenDDIIsInvalid);
+      return pushIf<string>(msg, !isNinthValid, whenStartingWithNineIsInvalid);
+    }
+
     return isDDIValid && isNinthValid;
   }
 
   if (!withDDI && withDDD && !startingWithNine) {
+    if (useCustomMessage) {
+      const msg: string[] = [];
+      const {
+        whenDDDIsInvalid,
+      } = useCustomMessage;
+
+      return pushIf<string>(msg, !isDDDValid, whenDDDIsInvalid);
+    }
+
     return isDDDValid;
   }
 
   if (!withDDI && withDDD && startingWithNine) {
+    if (useCustomMessage) {
+      const msg: string[] = [];
+      const {
+        whenDDDIsInvalid,
+        whenStartingWithNineIsInvalid,
+      } = useCustomMessage;
+
+      pushIf<string>(msg, !isDDDValid, whenDDDIsInvalid);
+      return pushIf<string>(msg, !isNinthValid, whenStartingWithNineIsInvalid);
+    }
+
     return isDDDValid && isNinthValid;
   }
 
   if (!withDDI && !withDDD && startingWithNine) {
+    if (useCustomMessage) {
+      const msg: string[] = [];
+      const {
+        whenStartingWithNineIsInvalid,
+      } = useCustomMessage;
+
+      return pushIf<string>(msg, !isNinthValid, whenStartingWithNineIsInvalid);
+    }
+
     return isNinthValid;
   }
 
   if (!withDDD && !withDDD && !startingWithNine) {
+    if (useCustomMessage) {
+      const msg: string[] = [];
+      const {
+        whenPhoneNumberIsInvalid,
+      } = useCustomMessage;
+
+      return pushIf<string>(msg, !validateNumber(numberSanitizes), whenPhoneNumberIsInvalid);
+    }
+
     return validateNumber(numberSanitizes);
   }
 
   throw new Exception(
-    'Nenhuma opcao encontrada para validar',
+    'Nenhuma opcao encontrada para validar numero de telefone',
     HttpStatus.INTERNAL_SERVER_ERROR,
   )
 }
 
-export default function main(number: defaultParameterType, options?: CellPhoneNumberOptions): boolean {
+export default function main(number: defaultParameterType, options?: CellPhoneNumberOptions): boolean | string[] {
   const numberSanitizes = Sanitizer.phoneNumber(number);
 
-  if (Verify.isNullOrUndefined(numberSanitizes)) return false;
-  if (Verify.isNotNumber(numberSanitizes)) return false;
+  function defaultReturn() {
+    if (options?.useCustomMessage) {
+      return [options.useCustomMessage.whenPhoneNumberIsInvalid]
+    }
+    return false;
+  }
 
-  if (!validateNumber(numberSanitizes as string)) return false;
-  if (!validateLength(numberSanitizes as string, options)) return false;
+  if (Verify.isNullOrUndefined(numberSanitizes)) return defaultReturn();
+  if (Verify.isNotNumber(numberSanitizes)) return defaultReturn();
+
+  if (!validateNumber(numberSanitizes as string)) return defaultReturn();
+
+  if (!validateLength(numberSanitizes as string, options)) defaultReturn();
 
   return validate(numberSanitizes as string, options);
 }

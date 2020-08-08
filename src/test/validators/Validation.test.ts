@@ -1,4 +1,4 @@
-import { BrazilDDD, CountyDailCodes, rangeInclusive, Validation } from '../../main';
+import { BrazilDDD, CellPhoneNumberCustomMessage, CountyDailCodes, rangeInclusive, Validation } from '../../main';
 
 describe('Validation', () => {
   describe('CPF', () => {
@@ -72,6 +72,17 @@ describe('Validation', () => {
   });
 
   describe('Cell Phone Number', () => {
+    const phoneNumberMsg= 'Numero Invalido';
+    const startingWithNineMsg = 'Digito 9 invalido';
+    const ddiMsg = 'DDI invalido';
+    const dddMsg = 'DDD invalido'
+    const message: CellPhoneNumberCustomMessage = {
+      whenPhoneNumberIsInvalid: phoneNumberMsg,
+      whenStartingWithNineIsInvalid: startingWithNineMsg,
+      whenDDIIsInvalid: ddiMsg,
+      whenDDDIsInvalid: dddMsg,
+    };
+
     test('Should only return true', () => {
       expect(
         Validation.cellPhoneNumber(
@@ -125,5 +136,92 @@ describe('Validation', () => {
         .map((dc) => `+${dc} (61) 9 8682-3666`)
         .forEach(testAllCountyDialCodes);
     });
+
+    test('Testing all positive cases and return an empty array', () => {
+      expect(
+        Validation.cellPhoneNumber(
+          5511986823682,
+          {
+            withDDD: true,
+            withDDI: true,
+            startingWithNine: true,
+            useCustomMessage: message,
+          })
+      ).toStrictEqual([]);
+      expect(
+        Validation.cellPhoneNumber(
+          '(61) 9 8682-3682',
+          {
+            withDDD: true,
+            startingWithNine: true,
+            useCustomMessage: message,
+          })
+      ).toStrictEqual([]);
+      expect(
+        Validation.cellPhoneNumber(
+          '+501 (61) 9 8682-3666',
+          {
+            withDDI: true,
+            withDDD: true,
+            startingWithNine: true,
+            useCustomMessage: message,
+          })
+      ).toStrictEqual([]);
+      expect(
+        Validation.cellPhoneNumber(
+          12177773333,
+          {
+            withDDI: true,
+            withDDD: true,
+            useCustomMessage: message,
+          }
+        )
+      ).toStrictEqual([]);
+      expect(
+        Validation.cellPhoneNumber(
+          88887732,
+          { useCustomMessage: message }
+        )
+      ).toStrictEqual([]);
+    })
+
+    describe('Testing all DDDs using customMessage', () => {
+      function testAllBrazilDDDs(number: string): void {
+        test(`Number: ${number} should be valid`, () => {
+          expect(Validation.cellPhoneNumber(
+            number,
+            {
+              withDDD: true,
+              useCustomMessage: message
+            }))
+            .toStrictEqual([])
+        });
+      }
+      BrazilDDD
+        .map((ddd) => `(${ddd}) 88823333`)
+        .forEach(testAllBrazilDDDs);
+    })
+
+    describe('Testing all DDIs and return an empty array', () => {
+      function testAllCountyDialCodes(number: string): void {
+        test(`Number: ${number} should be valid`, () => {
+          expect(Validation.cellPhoneNumber(
+            number,
+            {
+              withDDI: true,
+              startingWithNine: true,
+              withDDD: true,
+              useCustomMessage: message
+            }))
+            .toStrictEqual([]);
+        })
+      }
+
+      CountyDailCodes
+        .map((cdc) => cdc.dialCode)
+        .map((dc) => dc.replace('+', ''))
+        .map((dc) => `+${dc} (61) 9 8682-3666`)
+        .forEach(testAllCountyDialCodes);
+    })
   });
 })
