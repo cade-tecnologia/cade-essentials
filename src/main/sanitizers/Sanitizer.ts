@@ -1,12 +1,28 @@
 import Verify from '../verifies/Verify';
 
+type DefaultParam = string | number | null | undefined
 export default class Sanitizer {
-  public static cpf(value: string): string {
-    return value.replace(/[.\- ]/g, '')
+  /**
+   * se o parametro informado for null ou undefined retornar ele mesmo
+   */
+  public static cpf(value: DefaultParam): DefaultParam {
+    if (Verify.isNullOrUndefined(value)) return value;
+    return value!.toString().replace(/[.\- ]/g, '')
   }
 
-  public static phoneNumber(value: string | number | null | undefined): string | null | undefined{
-    if (Verify.isNullOrUndefined(value)) return null;
+  /**
+   * se o parametro informado for null ou undefined retornar ele mesmo
+   */
+  public static phoneNumber(value: DefaultParam): DefaultParam {
+    if (Verify.isNullOrUndefined(value)) return value;
+    return value!.toString().replace(/[+()\- ]/g, '');
+  }
+
+  /**
+   * se o parametro informado for null ou undefined retornar ele mesmo
+   */
+  public static cep(value: DefaultParam): DefaultParam {
+    if (Verify.isNullOrUndefined(value)) return value;
     return value!.toString().replace(/[+()\- ]/g, '');
   }
 }
