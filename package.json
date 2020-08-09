@@ -1,6 +1,6 @@
 {
-  "name": "@cade-tecnologia/essentials",
-  "version": "1.0.30",
+  "name": "@vetnow-management/essentials",
+  "version": "1.0.0",
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
   "files": [
@@ -24,15 +24,13 @@
   ],
   "author": "",
   "license": "ISC",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
   "peerDependencies": {
     "axios": "^0.19.2",
     "axios-observable": "^1.1.3",
     "rxjs": "^6.6.2"
   },
   "devDependencies": {
+    "@vetnow-management/eslint-config": "^1.0.1",
     "@types/jest": "^26.0.3",
     "@types/lodash": "^4.14.157",
     "@types/node": "^14.0.14",
