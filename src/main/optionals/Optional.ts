@@ -11,13 +11,13 @@ export default class Optional<T> {
 
   public ifPresent(func: Consumer<T>): void {
     if (Verify.isNotNullOrUndefined(this.value)) {
-      func(this.value);
+      func(this.value as NonNullable<T>);
     }
   }
 
   public ifPresentOrElse(presentFunc: Consumer<T>, notPresentFunc: Runnable): void {
     if (Verify.isNotNullOrUndefined(this.value)) {
-      presentFunc(this.value);
+      presentFunc(this.value as NonNullable<T>);
     } else {
       notPresentFunc();
     }
