@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 import { AxiosObservable } from 'axios-observable/dist/axios-observable.interface';
 
 import HttpClient from './HttpClient';
-import HttpClientConstructorProps from '../types/HttpClientConstructorProps';
+import HttpClientConfiguration from '../types/HttpClientConfiguration';
 import Verify from '../verifies/Verify';
 
 export default abstract class AbstractResource {
@@ -13,7 +13,7 @@ export default abstract class AbstractResource {
 
   private readonly BASE_URL: string;
 
-  protected constructor(apiURL: string, resourceEndpoint: string, httpClientConfig?: HttpClientConstructorProps) {
+  protected constructor(apiURL: string, resourceEndpoint: string, httpClientConfig?: HttpClientConfiguration) {
 
     this.HTTP_CLIENT = HttpClient.getInstance(httpClientConfig);
     this.BASE_URL = `${ apiURL }/${ resourceEndpoint }`;

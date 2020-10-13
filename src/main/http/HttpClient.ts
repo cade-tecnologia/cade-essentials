@@ -2,14 +2,14 @@ import Axios from 'axios-observable';
 import { AxiosRequestConfig } from 'axios';
 import { AxiosObservable } from 'axios-observable/dist/axios-observable.interface';
 
-import HttpClientConstructorProps from '../types/HttpClientConstructorProps';
+import HttpClientConfiguration from '../types/HttpClientConfiguration';
 
 export default class HttpClient {
   private static instance: HttpClient;
 
   private axiosInstance: Axios;
 
-  private constructor(props?: HttpClientConstructorProps) {
+  private constructor(props?: HttpClientConfiguration) {
     this.axiosInstance = Axios.create({
       responseType: props?.responseType ?? 'json',
     });
@@ -18,7 +18,7 @@ export default class HttpClient {
     this.buildResponseInterceptor(props);
   }
 
-  public static getInstance(props?: HttpClientConstructorProps): HttpClient {
+  public static getInstance(props?: HttpClientConfiguration): HttpClient {
     if (!this.instance) {
       HttpClient.instance = new HttpClient(props);
     }
@@ -50,13 +50,14 @@ export default class HttpClient {
     return this.axiosInstance.patch(url, body, config);
   }
 
-  private buildRequestInterceptor(props: HttpClientConstructorProps | null | undefined): void {
+  private buildRequestInterceptor(props: HttpClientConfiguration | null | undefined): void {
     this.axiosInstance
       .interceptors
       .request
       .use(
         (config) => {
           props
+            ?.interceptors
             ?.request
             ?.onFulfilled
             ?.forEach((fn) => fn(config));
@@ -64,6 +65,7 @@ export default class HttpClient {
         },
         (config) => {
           props
+            ?.interceptors
             ?.request
             ?.onRejected
             ?.forEach((fn) => fn(config));
@@ -72,13 +74,14 @@ export default class HttpClient {
       );
   }
 
-  private buildResponseInterceptor(props: HttpClientConstructorProps | null | undefined): void {
+  private buildResponseInterceptor(props: HttpClientConfiguration | null | undefined): void {
     this.axiosInstance
       .interceptors
       .response
       .use(
         (config) => {
           props
+            ?.interceptors
             ?.response
             ?.onFulfilled
             ?.forEach((fn) => fn(config));
@@ -86,6 +89,7 @@ export default class HttpClient {
         },
         (config) => {
           props
+            ?.interceptors
             ?.response
             ?.onRejected
             ?.forEach((fn) => fn(config.response));
