@@ -35,7 +35,7 @@ export default abstract class AbstractResource {
     );
   }
 
-  protected createUrlWithQueryParams(url: string, params: {[key: string]: string | null | undefined}) {
+  protected createUrlWithQueryParams(url: string, params: Record<string, any>) {
     const newParams = { ...params};
     Object.keys(newParams)
       .filter((key) => Verify.isNullOrUndefined(params[key]))
