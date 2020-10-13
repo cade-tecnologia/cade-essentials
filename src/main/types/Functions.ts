@@ -1,8 +1,10 @@
 export type Consumer<Param> = (t: Param) => void;
 export type BiConsumer<ParamA, ParamB> = (t: ParamA, u: ParamB) => void;
+export type OptionalConsumer<Param> = (t?: Param) => void;
+export type OptionalBiConsumer<ParamA, ParamB> = (t?: ParamA, u?: ParamB) => void;
 
 export type Func<Param, Return> = (t: Param) => Return;
-export type OptinalFunc<Param, Return> = (t?: Param) => Return;
+export type OptionalFunc<Param, Return> = (t?: Param) => Return;
 export type BiFunc<ParamA, ParamB, Return> = (t: ParamA, u: ParamB) => Return;
 export type TriFunc<ParamA, ParamB, ParamC, Return> = (a: ParamA, b: ParamB, c: ParamC) => Return;
 
