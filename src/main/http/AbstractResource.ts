@@ -11,7 +11,7 @@ import Verify from '../verifies/Verify';
 export default abstract class AbstractResource {
   protected readonly HTTP_CLIENT: HttpClient;
 
-  private readonly BASE_URL: string;
+  protected readonly BASE_URL: string;
 
   protected constructor(apiURL: string, resourceEndpoint: string, httpClientConfig?: HttpClientConfiguration) {
 
