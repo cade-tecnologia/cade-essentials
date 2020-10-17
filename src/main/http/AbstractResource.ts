@@ -19,6 +19,22 @@ export default abstract class AbstractResource {
     this.BASE_URL = `${ apiURL }/${ resourceEndpoint }`;
   }
 
+  protected patch<T>(body: any, url = ''): Observable<T> {
+    const formattedUrl = `${ this.BASE_URL }${url}`;
+
+    return this.getResponseBody<T>(
+      this.HTTP_CLIENT.patch(formattedUrl, body)
+    );
+  }
+
+  protected put<T>(body: any, url = ''): Observable<T> {
+    const formattedUrl = `${ this.BASE_URL }${url}`;
+
+    return this.getResponseBody<T>(
+      this.HTTP_CLIENT.put(formattedUrl, body)
+    );
+  }
+
   protected get<T>(url = ''): Observable<T> {
     const formattedUrl = `${ this.BASE_URL }${url}`;
 
