@@ -28,9 +28,9 @@
     "registry": "https://npm.pkg.github.com/"
   },
   "peerDependencies": {
-    "axios": "^0.19",
-    "axios-observable": "^1",
-    "rxjs": "^6"
+    "axios": "0.x",
+    "axios-observable": "1.x",
+    "rxjs": "6.x"
   },
   "devDependencies": {
     "@types/jest": "^26.0.3",
